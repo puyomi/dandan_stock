@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>단단이 주식 알리미</title>
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <header class="topbar">
+      <div class="brand">
+        <span class="logo">📈</span>
+        <h1>단단이 주식 알리미</h1>
+      </div>
+      <div class="status">
+        <span id="market-status" class="pill">—</span>
+        <span id="last-updated" class="muted">갱신 대기…</span>
+      </div>
+    </header>
+
+    <main class="layout">
+      <!-- 시세 영역 -->
+      <section class="quotes-area">
+        <div class="toolbar">
+          <form id="add-form" autocomplete="off">
+            <input id="add-input" type="text" placeholder="종목 추가 — 이름 또는 종목코드 (예: 삼성전자 / 005930)" />
+            <button type="submit">추가</button>
+            <div id="suggest" class="suggest hidden"></div>
+          </form>
+        </div>
+
+        <div class="legend">
+          <span class="muted">전일 종가 대비 등락률 색상:</span>
+          <span class="chip lv-up3">+10%↑</span>
+          <span class="chip lv-up2">+5~10%</span>
+          <span class="chip lv-up1">0~+5%</span>
+          <span class="chip lv-flat">보합</span>
+          <span class="chip lv-dn1">0~-5%</span>
+          <span class="chip lv-dn2">-5~-10%</span>
+          <span class="chip lv-dn3">-10%↓</span>
+        </div>
+
+        <div id="cards" class="cards"></div>
+        <p class="disclaimer muted">
+          ※ 네이버 금융 데이터 기반(비공식). 시세는 지연될 수 있으며 투자 판단의 근거로만 사용하지 마세요.
+        </p>
+      </section>
+
+      <!-- 뉴스 패널 -->
+      <aside class="news-area">
+        <div class="news-head">
+          <h2>📰 키워드 뉴스</h2>
+          <button id="mark-read" class="ghost" title="모든 NEW 표시 해제">모두 읽음</button>
+        </div>
+        <div class="keywords">
+          <div id="keyword-chips" class="keyword-chips"></div>
+          <form id="kw-form" autocomplete="off">
+            <input id="kw-input" type="text" placeholder="키워드 추가" />
+            <button type="submit">+</button>
+          </form>
+        </div>
+        <div id="news-list" class="news-list"></div>
+        <p id="news-source" class="muted news-source"></p>
+      </aside>
+    </main>
+
+    <script src="./app.js"></script>
+  </body>
+</html>
