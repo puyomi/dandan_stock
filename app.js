@@ -11,11 +11,13 @@ const DEFAULT_KEYWORDS = ["증설", "해외진출", "신규고객", "수주"];
 
 const QUOTE_INTERVAL = 15000; // 15초
 const NEWS_INTERVAL = 240000; // 4분
+const ACCESS_CODE = "1553"; // 입장 인증코드 (클라이언트 검사 — 소스에 노출됨)
 
 const LS = {
   stocks: "dandani.stocks",
   keywords: "dandani.keywords",
   seen: "dandani.seenNews",
+  auth: "dandani.auth",
 };
 
 function load(key, fallback) {
@@ -313,9 +315,48 @@ function escapeHtml(s) {
   }[c]));
 }
 
+/* ---------- 입장 게이트 ---------- */
+let appStarted = false;
+function startApp() {
+  if (appStarted) return;
+  appStarted = true;
+  renderKeywords();
+  fetchQuotes();
+  fetchNews();
+  setInterval(fetchQuotes, QUOTE_INTERVAL);
+  setInterval(fetchNews, NEWS_INTERVAL);
+}
+
+function unlock() {
+  document.body.classList.remove("locked");
+  $("#gate").classList.add("hidden");
+  startApp();
+}
+
+const gateForm = $("#gate-form");
+const gateInput = $("#gate-input");
+const gateError = $("#gate-error");
+
+gateForm.addEventListener("submit", (e) => {
+  e.preventDefault();
+  if (gateInput.value.trim() === ACCESS_CODE) {
+    save(LS.auth, true);
+    gateError.textContent = "";
+    unlock();
+  } else {
+    gateError.textContent = "인증코드가 올바르지 않습니다.";
+    const box = document.querySelector(".gate-box");
+    box.classList.remove("shake");
+    void box.offsetWidth; // 리플로우로 애니메이션 재시작
+    box.classList.add("shake");
+    gateInput.value = "";
+    gateInput.focus();
+  }
+});
+
 /* ---------- 시작 ---------- */
-renderKeywords();
-fetchQuotes();
-fetchNews();
-setInterval(fetchQuotes, QUOTE_INTERVAL);
-setInterval(fetchNews, NEWS_INTERVAL);
+if (load(LS.auth, false) === true) {
+  unlock(); // 이전에 인증한 브라우저는 바로 입장
+} else {
+  gateInput.focus();
+}

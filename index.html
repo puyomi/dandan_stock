@@ -6,7 +6,21 @@
     <title>단단이 주식 알리미</title>
     <link rel="stylesheet" href="./styles.css" />
   </head>
-  <body>
+  <body class="locked">
+    <!-- 입장 게이트 (인증코드 입력) -->
+    <div id="gate" class="gate">
+      <div class="gate-box">
+        <div class="gate-logo">🔒</div>
+        <h1>단단이 리딩방</h1>
+        <p class="gate-sub">입장하려면 인증코드를 입력하세요</p>
+        <form id="gate-form" autocomplete="off">
+          <input id="gate-input" type="password" inputmode="numeric" placeholder="인증코드" />
+          <button type="submit">입장</button>
+        </form>
+        <p id="gate-error" class="gate-error"></p>
+      </div>
+    </div>
+
     <header class="topbar">
       <div class="brand">
         <span class="logo">📈</span>

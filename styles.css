@@ -273,3 +273,61 @@ body {
 .news-item.is-new { background: #2a1a1d; }
 .news-source { font-size: 11px; margin: 8px 0 0; }
 .empty { color: var(--muted); font-size: 13px; padding: 20px 4px; text-align: center; }
+
+/* ---------- 입장 게이트 ---------- */
+/* 인증 전에는 대시보드를 숨김 */
+body.locked .topbar,
+body.locked .layout { display: none; }
+
+.gate {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: radial-gradient(900px 600px at 50% -10%, #1b2a4a 0%, var(--bg) 60%);
+}
+.gate.hidden { display: none; }
+.gate-box {
+  width: min(92vw, 380px);
+  text-align: center;
+  padding: 36px 28px 30px;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 18px;
+  box-shadow: 0 20px 60px #000a;
+}
+.gate-logo { font-size: 40px; }
+.gate-box h1 { font-size: 22px; margin: 10px 0 4px; letter-spacing: -0.4px; }
+.gate-sub { color: var(--muted); font-size: 13px; margin: 0 0 22px; }
+#gate-form { display: flex; gap: 8px; }
+#gate-input {
+  flex: 1;
+  padding: 13px 16px;
+  border-radius: 12px;
+  border: 1px solid var(--border);
+  background: var(--panel-2);
+  color: var(--text);
+  font-size: 18px;
+  letter-spacing: 4px;
+  text-align: center;
+}
+#gate-input:focus { outline: none; border-color: var(--accent); }
+#gate-form button {
+  padding: 0 20px;
+  border-radius: 12px;
+  border: none;
+  background: var(--accent);
+  color: #fff;
+  font-weight: 700;
+  font-size: 15px;
+  cursor: pointer;
+}
+.gate-error { color: #e23b4e; font-size: 13px; min-height: 18px; margin: 14px 0 0; }
+.shake { animation: shake 0.4s ease; }
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  20%, 60% { transform: translateX(-8px); }
+  40%, 80% { transform: translateX(8px); }
+}
